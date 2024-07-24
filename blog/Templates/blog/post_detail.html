@@ -10,8 +10,13 @@
 <br>
 <p>Created: {{post.created_at}}</p>
 
-<button type="submit">Delete text</button>
-<button type="submit">Edit text</button>
+<div>
+    <a href="{% url 'blog:post_edit' pk=post.id %}" class="btn btn-primary">Edit</a>
+    <form action="{% url 'blog:post_delete' pk=post.id %}" method="post" style="display:inline">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Delete</button>
+    </form>
+</div>
 
 {% endblock content %}
 

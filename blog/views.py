@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, JsonResponse
 
 from .forms import PostForm
@@ -58,9 +58,28 @@ def post_list(request):
 
 def post_detail(request, pk):
     # getting object with PK
-    post = Post.objects.get(pk=pk)
+    post = get_object_or_404(Post, pk=pk)
     context = {
         'title': 'Post info',
         'post': post
     }
     return render(request, template_name='blog/post_detail.html', context=context)
+
+def post_edit(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if request.method == "POST":
+        form = PostForm(data=request.POST, isinstance=post)
+        if form.is_valid():
+            form.save()
+            return post_list(request)
+    else:
+        form = PostForm(isinstance=post)
+        context = {
+            'form': form,
+            'title': "Edit post"
+        }
+    return render(request, template_name="blog/post_edit.html", context=context)
+
+
+def post_delete(request, pk):
+    post = get_object_or_404(Post, pk=pk)
