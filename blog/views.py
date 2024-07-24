@@ -4,7 +4,10 @@ from django.http import HttpResponse, JsonResponse
 from .forms import PostForm
 from .models import Post
 
-# Create your views here.
+"""
+FBV - Function based views
+CBV - Class based views
+"""
 def root(request):
     return render(request, template_name='blog/index.html')
 
@@ -52,3 +55,12 @@ def post_list(request):
         'posts': posts
     }
     return render(request, template_name='blog/posts.html', context=context)
+
+def post_detail(request, pk):
+    # getting object with PK
+    post = Post.objects.get(pk=pk)
+    context = {
+        'title': 'Post info',
+        'post': post
+    }
+    return render(request, template_name='blog/post_detail.html', context=context)

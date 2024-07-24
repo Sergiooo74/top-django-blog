@@ -1,0 +1,18 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+
+<h2>Post info # {{post.id}}</h2>
+<hr>
+<p>Author - {{post.author}}</p>
+<p>Name - {{post.title}}</p>
+<p>Post text:</p>
+<p>{{post.text}}</p>
+<br>
+<p>Created: {{post.created_at}}</p>
+
+<button type="submit">Delete text</button>
+<button type="submit">Edit text</button>
+
+{% endblock content %}
+
+
