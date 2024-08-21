@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, JsonResponse
 
 from .forms import PostForm
@@ -83,3 +83,15 @@ def post_edit(request, pk):
 
 def post_delete(request, pk):
     post = get_object_or_404(Post, pk=pk)
+    if request.method == "POST":
+        post.delete()
+        return redirect("blog:post_list")
+    return render(request, template_name="blog/post_delete.html", context={'post': post})
+
+
+def page_not_found(request, exeption):
+    return render(request, 'blog/484.html', status=484)
+
+
+def server_error(request):
+    return render(request, 'blog/500.html', status=500)

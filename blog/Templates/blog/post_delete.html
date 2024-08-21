@@ -1,0 +1,26 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+<h2>Delete post?</h2>
+<h3>Information about post # {{post.id}}</h3>
+<hr>
+<p>Author - {{post.author}}</p>
+<p>Name - {{post.title}}</p>
+<p>Post text:</p>
+<p>{{post.text}}</p>
+
+{% if post.image %}
+    <img width="300px" height="200px" src="{{post.image.url}}">
+{% endif %}
+
+<br>
+<p>Created: {{post.created_at}}</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Delete</button>
+    <a href="{% url 'blog:post_list' %}">
+        <button type="button">Scip</button>
+    </a>
+</form>
+
+{% endblock content %}
